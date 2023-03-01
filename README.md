@@ -50,4 +50,13 @@ The dashboard URL. First do kubectl proxy to be able to access it at localhost:8
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login
 
 Get a token to access the dashboard
+
+```{r, engine='bash', get_token}
 kubectl -n kube-system describe secrets `kubectl -n kube-system get secrets | awk '/clusterrole-aggregation-controller/ {print $1}'` | awk '/token:/ {print $2}'
+```
+
+## Delete VM
+
+```{r, engine='bash', delete_vm}
+bash call_delete_vm.sh
+```
