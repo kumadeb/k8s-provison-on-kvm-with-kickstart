@@ -29,7 +29,11 @@ MAC="RANDOM"
 VERBOSE=
 DEBUG=
 #VM_IMAGE_DIR=/var/lib/libvirt
-VM_IMAGE_DIR=~/k8s/k8s-prov/machines
+chmod 755 ~
+mkdir -m 777 ~/k8s 2>/dev/null
+mkdir -m 777 ~/k8s/k8s-prov 2>/dev/null
+mkdir -m 777 ~/k8s/k8s-prov/machines 2>/dev/null
+VM_IMAGE_DIR=~/k8s/k8s-prov/machines 2>/dev/null
 
 usage()
 {
@@ -104,7 +108,8 @@ if [[ ! -z $VERBOSE ]]; then
     set -xv
 fi
 
-mkdir -p $VM_IMAGE_DIR/{images,xml}
+mkdir -m 777 -p $VM_IMAGE_DIR/{images,xml} 2>/dev/null
+chown -R `whoami`:libvirt $VM_IMAGE_DIR
 
 virt-install \
 --connect=qemu:///system \
