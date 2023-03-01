@@ -27,4 +27,4 @@ charSet = string.letters + string.digits + './'
 for i in range(saltLen):
     salt = salt + random.choice(charSet)
 
-print crypt.crypt(getpass.getpass(), salt)
+print crypt.crypt(getpass.getpass(prompt="Enter the password you want to set for ansible user: "), salt)
