@@ -29,7 +29,7 @@ MAC="RANDOM"
 VERBOSE=
 DEBUG=
 #VM_IMAGE_DIR=/var/lib/libvirt
-VM_IMAGE_DIR=/home/maarten/k8s/k8s-prov/machines
+VM_IMAGE_DIR=~/k8s/k8s-prov/machines
 
 usage()
 {
@@ -53,11 +53,11 @@ EOF
 
 while getopts "h:n:i:k:r:c:s:b:m:v:d" option; do
     case "${option}"
-    in
-        h) 
+        in
+        h)
             usage
             exit 0
-            ;;
+        ;;
         n) HOSTNAME=${OPTARG};;
         i) ISO_FQN=${OPTARG};;
         k) KS_FQN=${OPTARG};;
@@ -107,28 +107,28 @@ fi
 mkdir -p $VM_IMAGE_DIR/{images,xml}
 
 virt-install \
-    --connect=qemu:///system \
-    --name="${HOSTNAME}" \
-    --bridge="${BRIDGE}" \
-    --mac="${MAC}" \
-    --disk="${VM_IMAGE_DIR}/images/${HOSTNAME}.img,bus=virtio,size=${STORAGE}" \
-    --ram="${RAM}" \
-    --vcpus="${VCPUS}" \
-    --autostart \
-    --hvm \
-    --arch x86_64 \
-    --accelerate \
-    --check-cpu \
-    --os-type=linux \
-    --os-variant=ubuntu20.04 \
-    --force \
-    --watchdog=default \
-    --extra-args="ks=file:/${KS_FILE} console=tty0 console=ttyS0,115200n8 serial" \
-    --initrd-inject="${KS_FQN}" \
-    --graphics=none \
-    --noautoconsole \
-    --debug \
-    --location="${ISO_FQN}"
+--connect=qemu:///system \
+--name="${HOSTNAME}" \
+--bridge="${BRIDGE}" \
+--mac="${MAC}" \
+--disk="${VM_IMAGE_DIR}/images/${HOSTNAME}.img,bus=virtio,size=${STORAGE}" \
+--ram="${RAM}" \
+--vcpus="${VCPUS}" \
+--autostart \
+--hvm \
+--arch x86_64 \
+--accelerate \
+--check-cpu \
+--os-type=linux \
+--os-variant=ubuntu20.04 \
+--force \
+--watchdog=default \
+--extra-args="ks=file:/${KS_FILE} console=tty0 console=ttyS0,115200n8 serial" \
+--initrd-inject="${KS_FQN}" \
+--graphics=none \
+--noautoconsole \
+--debug \
+--location="${ISO_FQN}"
 
 if [[ ! -z $DEBUG ]]; then
     # Connect to the console and watch the install
